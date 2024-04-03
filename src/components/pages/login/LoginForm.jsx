@@ -23,10 +23,10 @@ export default function LoginForm() {
   // affichage
   return (
     <>
+        <LoginFormStyled onSubmit={handleSubmit}>
         <h1>Bienvenue chez nous !</h1>
         <hr />
         <h2>Connectez-vous </h2>
-        <LoginFormStyled onSubmit={handleSubmit}>
           <TextInput
             type="text"
             value={inputValue}
