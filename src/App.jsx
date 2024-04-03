@@ -1,48 +1,18 @@
-import { useState } from 'react'
-import './App.css'
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
+import ErrorPage from './components/pages/error/ErrorPage'; 
+import LoginPage from './components/pages/login/LoginPage';
+import OrderPage from './components/pages/order/OrderPage';
 
 function App() {
+    return(
+      <Routes>
+        <Route path='/' element={<LoginPage />}/>
+        <Route path='order/:username' element={<OrderPage />}/>
+        <Route path='/*' element={<ErrorPage />}/>
+      </Routes>
+    );
 
-  // state (données)
-
-  const [firstName, setFirstName] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
-
-  // action comportements
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const message = firstName.trim() === '' ? 'Le champ prénom est obligatoire.' : `Bonjour ${firstName}`;
-    setErrorMessage(message === `Bonjour ${firstName}` ? '' : message);
-    if (message === `Bonjour ${firstName}`) {
-      setFirstName(''); 
-      alert(message);
-    }
-  };
-  
-
-  const handleChange = (e) => {
-    setFirstName(e.target.value);
-  };
-
-  // affichage
-
-  return (
-    <>
-        <h1>Bienvenue chez nous !</h1>
-        <h2>Connectez-vous </h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={firstName}
-            onChange={handleChange}
-            placeholder="Entrez votre prénom..."
-            />
-        <button type="submit">Accéder à votre espace</button>
-      </form>
-      {errorMessage && <div className="error">{errorMessage}</div>}
-    </>
-  )
 }
 
 export default App
