@@ -23,7 +23,7 @@ const NavBarStyled = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
-  padding: 0.5rem; 
+  padding: 0.5rem 2rem; 
   display: flex;
   justify-content: space-between;
   align-items: center;

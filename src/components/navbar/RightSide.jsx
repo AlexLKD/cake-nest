@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { fakeMenu } from '../pages/order/fakeMenu';
 import { BsPersonCircle } from "react-icons/bs"
 import styled from "styled-components"
 import { theme } from "../../theme"

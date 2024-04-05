@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
-import { fakeMenu } from "./fakeMenu";
 import { BsPersonCircle } from "react-icons/bs"
 import styled from "styled-components"
 import { theme } from "../../../theme"
 import Navbar from "../../navbar/NavBar";
+import MainContent from "../order/MainContent"
 
 export default function Profile() {
 
@@ -13,6 +13,7 @@ export default function Profile() {
   return (
     <ProfilePage>
       <Navbar username={username} />
+      <MainContent />
     </ProfilePage>
   )
 }
