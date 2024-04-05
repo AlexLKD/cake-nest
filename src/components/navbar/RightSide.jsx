@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { useParams } from 'react-router-dom';
 import { fakeMenu } from '../pages/order/fakeMenu';
 import { BsPersonCircle } from "react-icons/bs"
 import styled from "styled-components"
@@ -8,7 +7,7 @@ import { theme } from "../../theme"
 
 export default function RightSide({ username }) {
   return (
-    <ProfileStyled>
+    <RightSideStyled>
       <div className="info">
         <p>
           Salut <b>{username}</b>
@@ -22,11 +21,11 @@ export default function RightSide({ username }) {
       <div className="picture">
         <BsPersonCircle />
       </div>
-    </ProfileStyled>
+    </RightSideStyled>
   )
 }
 
-const ProfileStyled = styled.div`
+const RightSideStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
