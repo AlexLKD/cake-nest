@@ -5,6 +5,7 @@ import styled from "styled-components"
 import { theme } from "../../../theme"
 import Navbar from "../../navbar/NavBar";
 import MainContent from "../order/MainContent"
+import AdminPanel from "../../adminPanel/AdminPanel";
 
 export default function Profile() {
 
@@ -14,6 +15,7 @@ export default function Profile() {
     <ProfilePage>
       <Navbar username={username} />
       <MainContent />
+      <AdminPanel />
     </ProfilePage>
   )
 }
