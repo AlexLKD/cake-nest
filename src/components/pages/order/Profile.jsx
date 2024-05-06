@@ -1,21 +1,18 @@
 import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
-import { BsPersonCircle } from "react-icons/bs"
 import styled from "styled-components"
 import { theme } from "../../../theme"
 import Navbar from "../../navbar/NavBar";
 import MainContent from "../order/MainContent"
-import AdminPanel from "../../adminPanel/AdminPanel";
 
 export default function Profile() {
 
-  const { username } = useParams(); 
+  const {username} = useParams(); 
 
   return (
     <ProfilePage>
       <Navbar username={username} />
       <MainContent />
-      <AdminPanel />
     </ProfilePage>
   )
 }
@@ -27,4 +24,6 @@ const ProfilePage = styled.div`
   align-items: center;
   min-height: 100vh;
   background-color: ${theme.colors.primary};
+  height: 100vh;
+  overflow: hidden;
 `

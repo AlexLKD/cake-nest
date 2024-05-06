@@ -2,12 +2,14 @@ import React from 'react';
 import styled from "styled-components"
 import Menu from './Menu';
 import { theme } from "../../../theme"
+import AdminPanel from "../../adminPanel/AdminPanel";
 
 
 export default function MainContent() {
     return(
         <MainContentStyled>
         <Menu />
+        <AdminPanel className="admin-panel"/>
         </MainContentStyled>
     )
 }
@@ -17,9 +19,15 @@ const MainContentStyled = styled.div`
   max-width: 1200px;
   background: ${theme.colors.background_white};
   margin-bottom: 1rem;
-  padding: 2rem;
-  box-shadow: inset 0px 4px 17px 0px rgba(0,0,0,0.73);
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
-  flex-grow: 1; 
+  flex-grow: 1;
+  overflow-y: auto;
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+
+  .admin-panel{
+    position: sticky;
+    bottom: 0;
+  }
 `
