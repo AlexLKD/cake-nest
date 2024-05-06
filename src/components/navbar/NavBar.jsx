@@ -5,8 +5,12 @@ import RightSide from './RightSide';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
+import { useAdmin } from '../../context/AdminContext';
 
-const Navbar = ({ username }) => {
+export default function Navbar ({ username }) {
+
+
+  const { isAdminMode, toggleAdminMode } = useAdmin();
 
   const notifyAdminActive = () => {
     toast.success('Mode admin activé', {
@@ -34,10 +38,8 @@ const Navbar = ({ username }) => {
     });
   };
 
-  const [isAdminMode, setIsAdminMode] = useState(false);
-
-  const toggleAdminMode = () => {
-    setIsAdminMode(!isAdminMode);
+  const handleToggleAdminMode = () => {
+    toggleAdminMode();
 
     if (!isAdminMode) {
       notifyAdminActive();
@@ -46,14 +48,15 @@ const Navbar = ({ username }) => {
     }
   };
 
+
   return (
     <NavBarStyled>
       <LeftSide />
       <div className="navbar">
         {isAdminMode ? (
-          <button className='admin-btn' id="adminButton" onClick={toggleAdminMode}>DÉSACTIVER LE MODE ADMIN</button>
+          <button className='admin-btn' id="adminButton" onClick={handleToggleAdminMode}>DÉSACTIVER LE MODE ADMIN</button>
         ) : (
-          <button className='admin-btn' id="adminButton" onClick={toggleAdminMode}>ACTIVER LE MODE ADMIN</button>
+          <button className='admin-btn' id="adminButton" onClick={handleToggleAdminMode}>ACTIVER LE MODE ADMIN</button>
         )}
         <ToastContainer />
       </div>
@@ -61,9 +64,6 @@ const Navbar = ({ username }) => {
     </NavBarStyled>
   );
 };
-
-export default Navbar;
-
 
 const NavBarStyled = styled.div`
   width: 100%;
