@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import ErrorPage from './components/pages/error/ErrorPage'; 
 import LoginPage from './components/pages/login/LoginPage';
-import Profile from './components/pages/order/Profile';
+import Profile from './components/pages/order/main/Profile';
 
 function App() {
     return(
