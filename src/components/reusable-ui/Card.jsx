@@ -15,8 +15,7 @@ export default function Card({ id, title, imageSource, price }) {
 
   return (
     <CardStyled className="produit">
-      
-      {isAdminMode && <DeleteIcon size={35} onClick={handleDelete}/>}
+      {isAdminMode && <DeleteIcon className="delete-icon" size={35} onClick={handleDelete}/>}
       <div className="image">
         <img src={imageSource} alt={title} />
       </div>
@@ -42,7 +41,7 @@ const DeleteIcon = styled(TiDelete)`
 `
 
 const CardStyled = styled.div`
-position: relative;
+  position: relative;
   background: ${theme.colors.white};
   width: 240px;
   height: 320px;
@@ -53,6 +52,22 @@ position: relative;
   box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
   border-radius: ${theme.borderRadius.extraRound};
 
+  &:hover {
+    background: ${theme.colors.primary};
+
+    .buttonContainer {
+      background: ${theme.colors.white} !important;
+      color: ${theme.colors.primary} !important;
+    }
+
+    .left-description {
+        color: ${theme.colors.white} !important;
+      }
+
+    .delete-icon {
+      fill: ${theme.colors.white} !important;
+    }
+  }
 
   .image {
     width: 100%;
@@ -112,6 +127,8 @@ position: relative;
           font-size: ${theme.fonts.size.XS};
           cursor: pointer;
           padding: 12px;
+
+          
         }
       }
     }

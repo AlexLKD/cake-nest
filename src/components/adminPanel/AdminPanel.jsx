@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAdmin } from '../../context/AdminContext';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { HiCursorClick } from "react-icons/hi";
 import { MdModeEditOutline } from 'react-icons/md';
 import styled from 'styled-components';
 import AddProductForm from '../pages/order/main/AddProductForm';
@@ -34,7 +35,7 @@ export default function AdminPanel() {
         </div>
         <PanelContent className={isPanelOpen ? 'open' : 'closed'} >
           {activeTab === 'add' && <AddProductForm isPanelOpen={isPanelOpen} />}
-          {activeTab === 'edit' && <div>Modifier un produit</div>}
+          {activeTab === 'edit' && <div>Modifier un produit <HiCursorClick/></div>}
         </PanelContent>
       </PanelStyle>
     </div>
@@ -47,7 +48,7 @@ const PanelContent = styled.div`
   width: 100%;
   overflow: hidden;
   &.open {
-    height: auto;
+    height: 30vh;
     display: block;
   }
   &.closed {
