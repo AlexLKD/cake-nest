@@ -1,17 +1,29 @@
 import styled from "styled-components"
 import { theme } from "../../theme"
 import PrimaryButton from "./PrimaryButton"
+import { TiDelete } from 'react-icons/ti';
+import { useAdmin } from "../../context/AdminContext";
 
-export default function Card({ title, imageSource, leftDescription }) {
+export default function Card({ id, title, imageSource, price }) {
+
+  const { isAdminMode, removeProduct } = useAdmin();
+
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    removeProduct(id);
+  };
+
   return (
     <CardStyled className="produit">
+      
+      {isAdminMode && <DeleteIcon size={35} onClick={handleDelete}/>}
       <div className="image">
         <img src={imageSource} alt={title} />
       </div>
       <div className="text-info">
         <div className="title">{title}</div>
         <div className="description">
-          <div className="left-description">{leftDescription}</div>
+          <div className="left-description">{price}</div>
           <div className="right-description">
             <PrimaryButton className="primary-button" label={"Ajouter"} />
           </div>
@@ -21,7 +33,16 @@ export default function Card({ title, imageSource, leftDescription }) {
   )
 }
 
+const DeleteIcon = styled(TiDelete)`
+    position: absolute;
+    cursor: pointer;
+    top: 10px;
+    right: 10px;
+    color: #63a5aa;
+`
+
 const CardStyled = styled.div`
+position: relative;
   background: ${theme.colors.white};
   width: 240px;
   height: 320px;
@@ -31,6 +52,7 @@ const CardStyled = styled.div`
   padding-bottom: 10px;
   box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
   border-radius: ${theme.borderRadius.extraRound};
+
 
   .image {
     width: 100%;

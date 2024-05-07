@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from "styled-components"
 import Menu from './Menu';
-import { theme } from "../../../theme"
-import AdminPanel from "../../adminPanel/AdminPanel";
+import { theme } from "../../../../theme"
+import AdminPanel from "../../../adminPanel/AdminPanel";
 
 
 export default function MainContent() {
     return(
         <MainContentStyled>
-        <Menu />
+        <Menu className="menu"/>
         <AdminPanel className="admin-panel"/>
         </MainContentStyled>
     )
@@ -25,6 +25,7 @@ const MainContentStyled = styled.div`
   overflow-y: auto;
   -ms-overflow-style: none; 
   scrollbar-width: none;
+  position: relative;
 
   .admin-panel{
     position: sticky;

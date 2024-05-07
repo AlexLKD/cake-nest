@@ -4,28 +4,26 @@ import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { MdModeEditOutline } from 'react-icons/md';
 import styled from 'styled-components';
+import AddProductForm from '../pages/order/main/AddProductForm';
 
-const AdminPanel = () => {
+export default function AdminPanel() {
   const { isAdminMode, isPanelOpen, activeTab, togglePanel, switchTab } = useAdmin();
-  const [panelHeight, setPanelHeight] = useState(0);
 
   const handleTogglePanel = () => {
-    if (panelHeight === 0) {
-      setPanelHeight(400);
-    } else {
-      setPanelHeight(0);
-    }
     togglePanel();
+    if (!isPanelOpen) {
+      switchTab('add');
+    }
   };
 
   if (!isAdminMode) return null;
 
   return (
-    <div className={`admin-panel ${isPanelOpen ? 'open' : 'collapsed'}`}>
+    <div className={`admin-panel ${isPanelOpen ? 'open' : 'closed'}`}>
       <PanelStyle>
         <div className="tabs">
           <button onClick={handleTogglePanel}>
-            {isPanelOpen ? <FiChevronUp /> : <FiChevronDown /> }
+            {isPanelOpen ? <FiChevronUp /> : <FiChevronDown />}
           </button>
           <button className={activeTab === 'add' ? 'active' : ''} onClick={() => switchTab('add')}>
             <AiOutlinePlus /> Ajouter un produit
@@ -34,24 +32,35 @@ const AdminPanel = () => {
             <MdModeEditOutline /> Modifier un produit
           </button>
         </div>
-        <PanelContent style={{ height: panelHeight }}>
+        <PanelContent className={isPanelOpen ? 'open' : 'closed'} >
+          {activeTab === 'add' && <AddProductForm isPanelOpen={isPanelOpen} />}
+          {activeTab === 'edit' && <div>Modifier un produit</div>}
         </PanelContent>
       </PanelStyle>
     </div>
   );
 };
 
-export default AdminPanel;
-
 const PanelContent = styled.div`
   transition: height 0.3s ease;
-  background-color: grey; 
+  background-color: white; 
   width: 100%;
+  overflow: hidden;
+  &.open {
+    height: auto;
+    display: block;
+  }
+  &.closed {
+    height: 0;
+    display: none;
+  }
 `;
 
 const PanelStyle = styled.div`
+
   .tabs{
     margin-left: 2rem;
-    background-color: transparent !important;
+    background-color: transparent;
   }
+  
 `
