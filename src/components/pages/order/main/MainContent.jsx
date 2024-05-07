@@ -8,7 +8,7 @@ import AdminPanel from "../../../adminPanel/AdminPanel";
 export default function MainContent() {
     return(
         <MainContentStyled>
-        <Menu />
+        <Menu className="menu"/>
         <AdminPanel className="admin-panel"/>
         </MainContentStyled>
     )

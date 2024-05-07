@@ -6,6 +6,8 @@ import { MdOutlineEuro } from 'react-icons/md';
 import { BsFillCameraFill } from "react-icons/bs";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PrimaryButton from "../../../reusable-ui/PrimaryButton";
+
 
 export default function AddProductForm({ isPanelOpen }) {
   const { addProduct } = useAdmin();
@@ -81,7 +83,7 @@ export default function AddProductForm({ isPanelOpen }) {
             />
             <BsFillCameraFill className='icon'/>
           </div>
-          <button type="submit">Ajouter un nouveau produit</button>
+          <PrimaryButton type="submit" label="Ajouter un nouveau produit"></PrimaryButton>
         </InputsStyled>
       </AddForm>
     </form>
@@ -91,6 +93,7 @@ export default function AddProductForm({ isPanelOpen }) {
 const AddForm = styled.div`
   display: flex;
   align-items: center;
+  height: 30vh;
 
   .preview-img {
     max-width: 250px;
@@ -102,6 +105,9 @@ const AddForm = styled.div`
 
   .input {
     padding-left: 30px;
+    width: 100%;
+    height: 30px;
+    margin: .5rem 0;
   }
 
   .icon {
@@ -110,10 +116,14 @@ const AddForm = styled.div`
     top: 50%;
     transform: translateY(-50%);
   }
+
+  .buttonContainer {
+    margin-bottom: .5rem;
+    padding: 8px 16px;
+  }
 `;
 
 const InputsStyled = styled.div`
   display: flex;
   flex-direction: column;
-  gap: .5rem;
 `;

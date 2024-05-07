@@ -1,14 +1,16 @@
 import React, { createContext, useState, useContext } from 'react';
+import { fakeMenu } from '../fakeData/fakeMenu';
 
 const AdminContext = createContext();
 
 export const useAdmin = () => useContext(AdminContext);
 
 export const AdminProvider = ({ children }) => {
+
   const [isAdminMode, setIsAdminMode] = useState(false);
   const [isPanelOpen, setIsPanelOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('add');
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(fakeMenu);
 
 
   const toggleAdminMode = () => setIsAdminMode(!isAdminMode);
@@ -21,6 +23,13 @@ export const AdminProvider = ({ children }) => {
     const newId = lastId + 1;
     setProducts([{ id: newId, ...newProduct }, ...products]);
   };
+  const removeProduct = (productId) => {
+    // console.log(productId);
+    setProducts(products.filter(product => product.id !== productId));
+  };
+  const restoreDefaultProducts = () => {
+    setProducts(fakeMenu);
+  };
 
   return (
     <AdminContext.Provider value={{
@@ -31,7 +40,9 @@ export const AdminProvider = ({ children }) => {
       activeTab,
       switchTab,
       products,
-      addProduct
+      addProduct,
+      removeProduct,
+      restoreDefaultProducts,
     }}>
       {children}
     </AdminContext.Provider>
