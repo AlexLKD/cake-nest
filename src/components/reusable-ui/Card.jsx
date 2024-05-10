@@ -1,10 +1,11 @@
+import React, { useState } from 'react';
 import styled from "styled-components"
 import { theme } from "../../theme"
 import PrimaryButton from "./PrimaryButton"
 import { TiDelete } from 'react-icons/ti';
 import { useAdmin } from "../../context/AdminContext";
 
-export default function Card({ id, title, imageSource, price }) {
+export default function Card({ id, title, imageSource, price, isSelected, onSelect }) {
 
   const { isAdminMode, removeProduct } = useAdmin();
 
@@ -13,9 +14,13 @@ export default function Card({ id, title, imageSource, price }) {
     removeProduct(id);
   };
 
+  const handleClick = () => {
+    onSelect(id);
+  };
+
   return (
-    <CardStyled className="produit">
-      {isAdminMode && <DeleteIcon className="delete-icon" size={35} onClick={handleDelete}/>}
+    <CardStyled className={`produit ${isSelected ? 'selected' : ''}`} onClick={handleClick}>
+      {isAdminMode && <DeleteIcon size={35} onClick={handleDelete} className='delete-icon'/>}
       <div className="image">
         <img src={imageSource} alt={title} />
       </div>
@@ -52,20 +57,18 @@ const CardStyled = styled.div`
   box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
   border-radius: ${theme.borderRadius.extraRound};
 
-  &:hover {
+  &:hover,
+  &.selected {
     background: ${theme.colors.primary};
 
-    .buttonContainer {
-      background: ${theme.colors.white} !important;
-      color: ${theme.colors.primary} !important;
+    .primary-button {
+      background: white; 
+      color: ${theme.colors.primary};
     }
 
-    .left-description {
-        color: ${theme.colors.white} !important;
-      }
-
+    .left-description,
     .delete-icon {
-      fill: ${theme.colors.white} !important;
+      color: ${theme.colors.white} !important;
     }
   }
 

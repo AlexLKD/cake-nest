@@ -35,7 +35,7 @@ export default function AdminPanel() {
         </div>
         <PanelContent className={isPanelOpen ? 'open' : 'closed'} >
           {activeTab === 'add' && <AddProductForm isPanelOpen={isPanelOpen} />}
-          {activeTab === 'edit' && <div>Modifier un produit <HiCursorClick/></div>}
+          {activeTab === 'edit' && <div>Cliquer sur un produit pour le modifier <HiCursorClick/></div>}
         </PanelContent>
       </PanelStyle>
     </div>
