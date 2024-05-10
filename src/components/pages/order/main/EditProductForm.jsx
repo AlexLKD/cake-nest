@@ -7,11 +7,11 @@ import { BsFillCameraFill } from 'react-icons/bs';
 import PrimaryButton from '../../../reusable-ui/PrimaryButton';
 
 const EditProductForm = ({ product }) => {
+
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-
-  const { setProducts, togglePanel } = useAdmin();
+  const { products, setProducts, togglePanel } = useAdmin();
 
   useEffect(() => {
     if (product) {
@@ -22,15 +22,40 @@ const EditProductForm = ({ product }) => {
   }, [product]);
 
   const handleNameChange = (e) => {
-    setName(e.target.value);
+    const updatedName = e.target.value;
+    setName(updatedName);
+    const updatedProducts = products.map((p) => {
+      if (p.id === product.id) {
+        return { ...p, title: updatedName };
+      }
+      return p;
+    });
+    setProducts(updatedProducts);
   };
 
   const handlePriceChange = (e) => {
-    setPrice(e.target.value);
+    const updatedPrice = e.target.value;
+    setPrice(updatedPrice);
+    const updatedProducts = products.map((p) => {
+      if (p.id === product.id) {
+        return { ...p, price: updatedPrice };
+      }
+      return p;
+    });
+    setProducts(updatedProducts);
   };
 
   const handleImageUrlChange = (e) => {
-    setImageUrl(e.target.value);
+    const updatedImageUrl = e.target.value;
+    setImageUrl(updatedImageUrl);
+    // Mettre à jour l'état global des produits
+    const updatedProducts = products.map((p) => {
+      if (p.id === product.id) {
+        return { ...p, imageSource: updatedImageUrl };
+      }
+      return p;
+    });
+    setProducts(updatedProducts);
   };
 
   const handleSubmit = (e) => {
