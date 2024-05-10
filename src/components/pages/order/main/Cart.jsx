@@ -2,20 +2,33 @@ import React from 'react';
 import styled from 'styled-components';
 import SmallCard from '../../../reusable-ui/SmallCard';
 
-export default function Cart({ cartItems }) { // Utilisez cartItems passé en prop
+export default function Cart({ cartItems }) {
+
+  const total = Object.values(cartItems).reduce((total, item) => {
+    const itemPrice = typeof item.price === 'string' ? parseFloat(item.price.replace(',', '.')) : item.price;
+    const itemQuantity = typeof item.quantity === 'number' ? item.quantity : parseInt(item.quantity, 10);
+  
+    if (isNaN(itemPrice) || isNaN(itemQuantity)) {
+      return total;
+    }
+    
+    return total + itemPrice * itemQuantity;
+  }, 0);
+  
+
 
   return (
     <CartContainer>
       <TotalContainer>
-        total : {cartItems.reduce((total, item) => total + parseFloat(item.price), 0).toFixed(2)}€
+        total : {total.toFixed(2)}€
       </TotalContainer>
-      {cartItems.length === 0 ? (
+      {Object.values(cartItems).length === 0 ? (
         <EmptyMessage>
           votre commande est vide
         </EmptyMessage>
       ) : (
-        cartItems.map((item, index) => (
-          <SmallCard key={index} title={item.title} imageSource={item.imageSource} price={item.price} />
+        Object.values(cartItems).map((item) => (
+          <SmallCard key={item.id} title={`${item.title} x${item.quantity}`} imageSource={item.imageSource} price={`${item.price}`} />
         ))
       )}
     </CartContainer>

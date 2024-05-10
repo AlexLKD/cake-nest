@@ -3,18 +3,18 @@ import styled from 'styled-components';
 import { theme } from '../../theme';
 
 const SmallCard = ({ imageSource, title, price }) => {
-  return (
-    <SmallCardContainer>
-      <ImageContainer>
-        <img src={imageSource} alt={title} />
-      </ImageContainer>
-      <InfoContainer>
-        <Title>{title}</Title>
-        <Price>{price}</Price>
-      </InfoContainer>
-    </SmallCardContainer>
-  );
-};
+    return (
+      <SmallCardContainer>
+        <ImageContainer>
+          <img src={imageSource} alt={title} />
+        </ImageContainer>
+        <InfoContainer>
+          <Title>{title}</Title>
+          <Price>{price}</Price>
+        </InfoContainer>
+      </SmallCardContainer>
+    );
+  };
 
 const SmallCardContainer = styled.div`
   display: flex;

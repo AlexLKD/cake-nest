@@ -15,9 +15,16 @@ export default function Menu() {
     setSelectedProduct(product);
     setSelectedCardId(product.id);
   };
-
+  
   const addToCart = (product) => {
-    setCartItems(prevItems => [...prevItems, product]);
+    setCartItems(prevItems => {
+      // Si le produit existe déjà, augmentez la quantité
+      if (prevItems[product.id]) {
+        return { ...prevItems, [product.id]: { ...product, quantity: prevItems[product.id].quantity + 1 } };
+      }
+      // Sinon, ajoutez le produit avec une quantité de 1
+      return { ...prevItems, [product.id]: { ...product, quantity: 1 } };
+    });
   };
   
   let adminActions;
