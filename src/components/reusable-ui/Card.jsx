@@ -5,8 +5,7 @@ import PrimaryButton from "./PrimaryButton"
 import { TiDelete } from 'react-icons/ti';
 import { useAdmin } from "../../context/AdminContext";
 
-export default function Card({ id, title, imageSource, price, isSelected, onSelect }) {
-
+export default function Card({ id, title, imageSource, price, isSelected, onSelect, onAddToCart }) {
   const { isAdminMode, removeProduct } = useAdmin();
 
   const handleDelete = (e) => {
@@ -17,6 +16,12 @@ export default function Card({ id, title, imageSource, price, isSelected, onSele
   const handleClick = () => {
     onSelect({ id, title, imageSource, price });
   };
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    onAddToCart({ id, title, imageSource, price });
+  };
+
 
   return (
     <CardStyled className={`produit ${isSelected ? 'selected' : ''}`} onClick={handleClick}>
@@ -29,7 +34,7 @@ export default function Card({ id, title, imageSource, price, isSelected, onSele
         <div className="description">
           <div className="left-description">{price}</div>
           <div className="right-description">
-            <PrimaryButton className="primary-button" label={"Ajouter"} />
+            <PrimaryButton className="primary-button" label={"Ajouter"} onClick={handleAddToCart} />
           </div>
         </div>
       </div>
