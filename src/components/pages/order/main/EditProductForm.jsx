@@ -45,6 +45,7 @@ const EditProductForm = ({ product }) => {
     setProducts(updatedProducts);
   };
 
+  
   const handleImageUrlChange = (e) => {
     const updatedImageUrl = e.target.value;
     setImageUrl(updatedImageUrl);
