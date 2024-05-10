@@ -11,11 +11,17 @@ export const AdminProvider = ({ children }) => {
   const [isPanelOpen, setIsPanelOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('add');
   const [products, setProducts] = useState(fakeMenu);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
 
   const toggleAdminMode = () => setIsAdminMode(!isAdminMode);
-  const togglePanel = () => setIsPanelOpen(!isPanelOpen);
+
+  const togglePanel = () => {
+    setIsPanelOpen(!isPanelOpen);
+  };
+
   const switchTab = (tab) => setActiveTab(tab);
+
   const addProduct = (newProduct) => {
     const lastId = products.length > 0
       ? Math.max(...products.map(product => product.id))
@@ -23,10 +29,11 @@ export const AdminProvider = ({ children }) => {
     const newId = lastId + 1;
     setProducts([{ id: newId, ...newProduct }, ...products]);
   };
+
   const removeProduct = (productId) => {
-    // console.log(productId);
     setProducts(products.filter(product => product.id !== productId));
   };
+
   const restoreDefaultProducts = () => {
     setProducts(fakeMenu);
   };
@@ -40,9 +47,12 @@ export const AdminProvider = ({ children }) => {
       activeTab,
       switchTab,
       products,
+      setProducts,
       addProduct,
       removeProduct,
       restoreDefaultProducts,
+      selectedProduct,
+      setSelectedProduct,
     }}>
       {children}
     </AdminContext.Provider>

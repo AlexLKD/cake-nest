@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { theme } from "../../../../theme";
 import { formatPrice } from "../../../../utils/maths";
@@ -6,7 +6,13 @@ import Card from "../../../reusable-ui/Card";
 import { useAdmin } from "../../../../context/AdminContext";
 
 export default function Menu() {
-  const { isAdminMode, products, restoreDefaultProducts } = useAdmin();
+  const { isAdminMode, products, restoreDefaultProducts, setSelectedProduct } = useAdmin();
+  const [selectedCardId, setSelectedCardId] = useState(null);
+
+  const handleCardSelect = (product) => {
+    setSelectedProduct(product);
+    setSelectedCardId(product.id);
+  };
 
   let adminActions;
   if (products.length === 0) {
@@ -36,6 +42,8 @@ export default function Menu() {
             title={item.title}
             imageSource={item.imageSource}
             price={formatPrice(item.price)}
+            isSelected={item.id === selectedCardId}
+            onSelect={handleCardSelect}
           />
         ))}
       </MenuStyled>
