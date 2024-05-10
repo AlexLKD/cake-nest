@@ -4,6 +4,7 @@ import { theme } from "../../../../theme";
 import { formatPrice } from "../../../../utils/maths";
 import Card from "../../../reusable-ui/Card";
 import { useAdmin } from "../../../../context/AdminContext";
+import Cart from "./Cart";
 
 export default function Menu() {
   const { isAdminMode, products, restoreDefaultProducts, setSelectedProduct } = useAdmin();
@@ -32,33 +33,37 @@ export default function Menu() {
   }
 
   return (
-    <>
+    <div style={{ display: 'flex' }}>
+      <Cart />
       <MenuStyled className="menu">
-      {adminActions}
-        {products.map((item) => (
-          <Card
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            imageSource={item.imageSource}
-            price={formatPrice(item.price)}
-            isSelected={item.id === selectedCardId}
-            onSelect={handleCardSelect}
-          />
-        ))}
+        {adminActions}
+          {products.map((item) => (
+            <Card
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              imageSource={item.imageSource}
+              price={formatPrice(item.price)}
+              isSelected={item.id === selectedCardId}
+              onSelect={handleCardSelect}
+            />
+          ))}
       </MenuStyled>
-    </>
+    </div>
   );
 }
 
 const MenuStyled = styled.div`
   background: ${theme.colors.background_white};
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-row-gap: 60px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
   padding: 50px 50px 150px;
   justify-items: center;
   box-shadow: inset 0px 4px 17px 0px rgba(0,0,0,0.73);
+  width: calc(100% - 300px);
 
   .btn-restore {
     display: flex;
