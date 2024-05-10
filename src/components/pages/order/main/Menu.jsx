@@ -9,12 +9,17 @@ import Cart from "./Cart";
 export default function Menu() {
   const { isAdminMode, products, restoreDefaultProducts, setSelectedProduct } = useAdmin();
   const [selectedCardId, setSelectedCardId] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
   const handleCardSelect = (product) => {
     setSelectedProduct(product);
     setSelectedCardId(product.id);
   };
 
+  const addToCart = (product) => {
+    setCartItems(prevItems => [...prevItems, product]);
+  };
+  
   let adminActions;
   if (products.length === 0) {
     adminActions = isAdminMode ? (
@@ -33,25 +38,30 @@ export default function Menu() {
   }
 
   return (
-    <div style={{ display: 'flex' }}>
-      <Cart />
+    <MainContainer>
+      <Cart cartItems={cartItems} />
       <MenuStyled className="menu">
-        {adminActions}
-          {products.map((item) => (
-            <Card
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              imageSource={item.imageSource}
-              price={formatPrice(item.price)}
-              isSelected={item.id === selectedCardId}
-              onSelect={handleCardSelect}
-            />
-          ))}
+        {products.map((item) => (
+          <Card
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            imageSource={item.imageSource}
+            price={formatPrice(item.price)}
+            isSelected={item.id === selectedCardId}
+            onSelect={handleCardSelect}
+            onAddToCart={addToCart}
+            className="card-container"
+          />
+        ))}
       </MenuStyled>
-    </div>
+    </MainContainer>
   );
 }
+
+const MainContainer = styled.div`
+  display: flex;
+`;
 
 const MenuStyled = styled.div`
   background: ${theme.colors.background_white};
@@ -63,7 +73,7 @@ const MenuStyled = styled.div`
   padding: 50px 50px 150px;
   justify-items: center;
   box-shadow: inset 0px 4px 17px 0px rgba(0,0,0,0.73);
-  width: calc(100% - 300px);
+  width: 100%;
 
   .btn-restore {
     display: flex;
