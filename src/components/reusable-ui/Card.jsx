@@ -15,7 +15,7 @@ export default function Card({ id, title, imageSource, price, isSelected, onSele
   };
 
   const handleClick = () => {
-    onSelect(id);
+    onSelect({ id, title, imageSource, price });
   };
 
   return (

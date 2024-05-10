@@ -9,10 +9,9 @@ export default function Menu() {
   const { isAdminMode, products, restoreDefaultProducts, setSelectedProduct } = useAdmin();
   const [selectedCardId, setSelectedCardId] = useState(null);
 
-  const handleCardSelect = (id) => {
-    const product = products.find((product) => product.id === id);
+  const handleCardSelect = (product) => {
     setSelectedProduct(product);
-    setSelectedCardId(selectedCardId === id ? null : id);
+    setSelectedCardId(product.id);
   };
 
   let adminActions;
