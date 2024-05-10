@@ -1,8 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { theme } from '../../theme';
+import { TiDeleteOutline } from 'react-icons/ti';
 
-const SmallCard = ({ imageSource, title, price }) => {
+const SmallCard = ({ imageSource, title, price, id, handleRemove }) => {
+
+    const handleDeleteClick = (e) => {
+      e.stopPropagation();
+      handleRemove(id);
+    };
+  
     return (
       <SmallCardContainer>
         <ImageContainer>
@@ -11,10 +18,14 @@ const SmallCard = ({ imageSource, title, price }) => {
         <InfoContainer>
           <Title>{title}</Title>
           <Price>{price}</Price>
+          <DeleteButton onClick={handleDeleteClick}>
+            <TiDeleteOutline />
+          </DeleteButton>
         </InfoContainer>
       </SmallCardContainer>
     );
   };
+
 
 const SmallCardContainer = styled.div`
   display: flex;
@@ -26,8 +37,18 @@ const SmallCardContainer = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
+const DeleteButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  visibility: hidden;
+  ${SmallCardContainer}:hover & {
+    visibility: visible;
+  }
+`;
+
 const ImageContainer = styled.div`
-  width: 50px; // ou la taille souhaitée pour les images dans le panier
+  width: 50px;
   height: 50px;
   img {
     width: 100%;

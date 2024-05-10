@@ -9,20 +9,18 @@ import Cart from "./Cart";
 export default function Menu() {
   const { isAdminMode, products, restoreDefaultProducts, setSelectedProduct } = useAdmin();
   const [selectedCardId, setSelectedCardId] = useState(null);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState({});
 
   const handleCardSelect = (product) => {
     setSelectedProduct(product);
     setSelectedCardId(product.id);
   };
-  
+
   const addToCart = (product) => {
     setCartItems(prevItems => {
-      // Si le produit existe déjà, augmentez la quantité
       if (prevItems[product.id]) {
         return { ...prevItems, [product.id]: { ...product, quantity: prevItems[product.id].quantity + 1 } };
       }
-      // Sinon, ajoutez le produit avec une quantité de 1
       return { ...prevItems, [product.id]: { ...product, quantity: 1 } };
     });
   };
@@ -46,7 +44,7 @@ export default function Menu() {
 
   return (
     <MainContainer>
-      <Cart cartItems={cartItems} />
+      <Cart cartItems={cartItems} setCartItems={setCartItems} />
       <MenuStyled className="menu">
         {products.map((item) => (
           <Card
