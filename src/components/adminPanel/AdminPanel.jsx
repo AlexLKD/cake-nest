@@ -6,15 +6,20 @@ import { HiCursorClick } from "react-icons/hi";
 import { MdModeEditOutline } from 'react-icons/md';
 import styled from 'styled-components';
 import AddProductForm from '../pages/order/main/AddProductForm';
+import EditProductForm from '../pages/order/main/EditProductForm';
 
 export default function AdminPanel() {
-  const { isAdminMode, isPanelOpen, activeTab, togglePanel, switchTab } = useAdmin();
-
+  const { isAdminMode, isPanelOpen, activeTab, togglePanel, switchTab, products, setProducts, selectedProduct } = useAdmin();
   const handleTogglePanel = () => {
     togglePanel();
     if (!isPanelOpen) {
       switchTab('add');
     }
+  };
+
+  const handleSelectProduct = (product) => {
+    setSelectedProduct(product);
+    switchTab('edit');
   };
 
   if (!isAdminMode) return null;
@@ -35,7 +40,11 @@ export default function AdminPanel() {
         </div>
         <PanelContent className={isPanelOpen ? 'open' : 'closed'} >
           {activeTab === 'add' && <AddProductForm isPanelOpen={isPanelOpen} />}
-          {activeTab === 'edit' && <div>Cliquer sur un produit pour le modifier <HiCursorClick/></div>}
+          {activeTab === 'edit' && selectedProduct ? (
+            <EditProductForm product={selectedProduct} />
+          ) : (
+            <div>Cliquer sur un produit pour le modifier <HiCursorClick/></div>
+          )}
         </PanelContent>
       </PanelStyle>
     </div>

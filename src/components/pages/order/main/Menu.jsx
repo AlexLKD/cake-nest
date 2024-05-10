@@ -6,10 +6,12 @@ import Card from "../../../reusable-ui/Card";
 import { useAdmin } from "../../../../context/AdminContext";
 
 export default function Menu() {
-  const { isAdminMode, products, restoreDefaultProducts } = useAdmin();
+  const { isAdminMode, products, restoreDefaultProducts, setSelectedProduct } = useAdmin();
   const [selectedCardId, setSelectedCardId] = useState(null);
 
   const handleCardSelect = (id) => {
+    const product = products.find((product) => product.id === id);
+    setSelectedProduct(product);
     setSelectedCardId(selectedCardId === id ? null : id);
   };
 

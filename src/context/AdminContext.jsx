@@ -11,6 +11,7 @@ export const AdminProvider = ({ children }) => {
   const [isPanelOpen, setIsPanelOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('add');
   const [products, setProducts] = useState(fakeMenu);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
 
   const toggleAdminMode = () => setIsAdminMode(!isAdminMode);
@@ -43,6 +44,8 @@ export const AdminProvider = ({ children }) => {
       addProduct,
       removeProduct,
       restoreDefaultProducts,
+      selectedProduct,
+      setSelectedProduct,
     }}>
       {children}
     </AdminContext.Provider>
