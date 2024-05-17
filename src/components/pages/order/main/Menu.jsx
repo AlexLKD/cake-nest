@@ -1,15 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { theme } from "../../../../theme";
 import { formatPrice } from "../../../../utils/maths";
 import Card from "../../../reusable-ui/Card";
 import { useAdmin } from "../../../../context/AdminContext";
 import Cart from "./Cart";
+import axios from "../../../../lib/axios";
 
 export default function Menu() {
-  const { isAdminMode, products, restoreDefaultProducts, setSelectedProduct } = useAdmin();
+  const { isAdminMode, restoreDefaultProducts, setSelectedProduct } = useAdmin();
+  const [products, setProducts] = useState([]);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [cartItems, setCartItems] = useState({});
+
+  const fetchCupcakes = async () => {
+    try {
+      const response = await axios.get('api/cupcakes');
+        setProducts(response.data.data); 
+      } catch (error) {
+        console.error("Error fetching cupcakes:", error);
+      }
+    };
+    
+    useEffect(() => {
+      fetchCupcakes();
+      console.log(products);
+  }, []);
+
 
   const handleCardSelect = (product) => {
     setSelectedProduct(product);
@@ -24,21 +41,20 @@ export default function Menu() {
       return { ...prevItems, [product.id]: { ...product, quantity: 1 } };
     });
   };
-  
+
   let adminActions;
   if (products.length === 0) {
     adminActions = isAdminMode ? (
-      <div style={{width: '70vw', display: 'flex', maxWidth: '1200px', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', padding: '0'}}>
+      <div style={{ width: '70vw', display: 'flex', maxWidth: '1200px', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', padding: '0' }}>
         <p>Il n'y a plus de produits disponibles ?</p>
         <p>Cliquez ci-dessous pour les réinitialiser</p>
-      <button className="btn-restore" onClick={restoreDefaultProducts}>Générer de nouveaux gateaux</button>
+        <button className="btn-restore" onClick={restoreDefaultProducts}>Générer de nouveaux gâteaux</button>
       </div>
     ) : (
-      <div style={{width: '70vw', display: 'flex', maxWidth: '1200px', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', padding: '0'}}>
-      <p>Victime de notre succès</p>
-      <p>De nouvelles recettes sont en préparation, revenez vite !</p>
-    </div>
-
+      <div style={{ width: '70vw', display: 'flex', maxWidth: '1200px', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', padding: '0' }}>
+        <p>Victime de notre succès</p>
+        <p>De nouvelles recettes sont en préparation, revenez vite !</p>
+      </div>
     );
   }
 
@@ -46,19 +62,23 @@ export default function Menu() {
     <MainContainer>
       <Cart cartItems={cartItems} setCartItems={setCartItems} />
       <MenuStyled className="menu">
-        {products.map((item) => (
-          <Card
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            imageSource={item.imageSource}
-            price={formatPrice(item.price)}
-            isSelected={item.id === selectedCardId}
-            onSelect={handleCardSelect}
-            onAddToCart={addToCart}
-            className="card-container"
-          />
-        ))}
+        {products.length > 0 ? (
+          products.map((item) => (
+            <Card
+              key={item.id}
+              id={item.id}
+              title={item.name}
+              imageSource={item.image}
+              price={formatPrice(item.price)}
+              isSelected={item.id === selectedCardId}
+              onSelect={handleCardSelect}
+              onAddToCart={addToCart}
+              className="card-container"
+            />
+          ))
+        ) : (
+          adminActions
+        )}
       </MenuStyled>
     </MainContainer>
   );
@@ -85,4 +105,4 @@ const MenuStyled = styled.div`
     height: 40px;
     align-items: center;
   }
-`
+`;

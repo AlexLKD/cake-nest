@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components"
 import { theme } from "../../theme"
 import PrimaryButton from "./PrimaryButton"
 import { TiDelete } from 'react-icons/ti';
 import { useAdmin } from "../../context/AdminContext";
+import axios from '../../lib/axios';
 
 export default function Card({ id, title, imageSource, price, isSelected, onSelect, onAddToCart }) {
   const { isAdminMode, removeProduct } = useAdmin();
@@ -24,6 +25,7 @@ export default function Card({ id, title, imageSource, price, isSelected, onSele
 
 
   return (
+
     <CardStyled className={`produit ${isSelected ? 'selected' : ''}`} onClick={handleClick}>
       {isAdminMode && <DeleteIcon size={35} onClick={handleDelete} className='delete-icon'/>}
       <div className="image">

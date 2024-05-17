@@ -6,8 +6,32 @@ import TextInput from "../../reusable-ui/TextInput";
 import { BsPersonCircle } from "react-icons/bs";
 import PrimaryButton from "../../reusable-ui/PrimaryButton";
 import { theme } from "../../../theme";
+import axios from "../../../lib/axios";
 
 export default function LoginForm() {
+  
+  const csrf = () => axios.get("/sanctum/csrf-cookie");
+
+  const login = async ({ ...props }) => {
+    try {
+      await csrf();
+
+      await axios.post("/login", props);
+      navigate(`/order/${inputValue}`)
+
+
+    } catch (error) {
+      if (error.response && error.response.status === 422) {
+        console.log(error.response.data.errors);
+      } else {
+        console.error(
+          "Une erreur s'est produite lors de la tentative de connexion :",
+          error
+        );
+      }
+    }
+  };
+
   // state (données)
   const [inputValue, setInputValue] = useState('')
   const navigate = useNavigate();
@@ -15,7 +39,7 @@ export default function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setInputValue("");
-    navigate(`/order/${inputValue}`)
+    login({ password: "password", email: "test@example.com" });
   };
   const handleChange = (e) => {
     setInputValue(e.target.value);
